@@ -19,7 +19,7 @@ app = FastAPI()
 
 origins = [
     "https://localhost:5175", 
-    "https://localhost:5175/chatbot", "https://medisquad.vercel.app/chatbot"
+    "https://localhost:5175/chatbot", "https://medisquad.vercel.app/chatbot", "https://medisquad.vercel.app"
 ]
 
 app.add_middleware(
