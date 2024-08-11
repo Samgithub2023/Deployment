@@ -18,7 +18,8 @@ if not groq_api_key:
 app = FastAPI()
 
 origins = [
-    "http://localhost:5175",
+    "https://localhost:5175", 
+    "https://localhost:5175/chatbot"
 ]
 
 app.add_middleware(
