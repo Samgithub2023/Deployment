@@ -18,8 +18,7 @@ app = FastAPI()
 
 class ChatInput(BaseModel):
     text: str
-    model: str = "mixtral-8x7b-32768"
-    memory_length: int = 5
+   
 
 # Initialize conversation and memory outside of the endpoint to maintain state
 memory = ConversationBufferWindowMemory(k=5)
@@ -29,15 +28,6 @@ conversation = ConversationChain(llm=groq_chat, memory=memory)
 @app.post("/chat")
 async def chat_endpoint(chat_input: ChatInput):
     try:
-        # Update conversation parameters if they've changed
-        if chat_input.model != groq_chat.model_name:
-            groq_chat.model_name = chat_input.model
-            conversation.llm = groq_chat
-
-        if chat_input.memory_length != memory.k:
-            memory.k = chat_input.memory_length
-
-        # Get response from the conversation chain
         response = conversation(chat_input.text)
         
         return {"response": response['response']}
