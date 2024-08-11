@@ -4,6 +4,7 @@ import os
 from groq import Groq
 from langchain.chains import ConversationChain
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+from fastapi.middleware.cors import CORSMiddleware
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 import uvicorn
@@ -15,6 +16,18 @@ if not groq_api_key:
     raise ValueError("GROQ_API_KEY environment variable not set. Please set it before running the script.")
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5175",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class ChatInput(BaseModel):
     text: str
